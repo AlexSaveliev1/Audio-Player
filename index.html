@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audioplayer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+    <style>
+        *{
+            outline:none;
+        }
+        .container{
+            background-color: #90b1cc;
+            background-image: url('img/2.jpg');
+        }
+        .jumbotron{
+            -webkit-box-shadow: 2px 3px 38px -2px rgba(0,0,0,0.75);
+            -moz-box-shadow: 2px 3px 38px -2px rgba(0,0,0,0.75);
+            box-shadow: 2px 3px 38px -2px rgba(0,0,0,0.75);
+        }
+        #player-wrapper{
+            max-width:400px;
+            border:1px solid #ccc;
+            margin: 0 auto;
+            background-color: #cccccc;
+            border-radius: 20px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+            border: 1px solid #244f68;
+            -webkit-box-shadow: 3px 4px 31px -5px rgba(0,0,0,0.75);
+            -moz-box-shadow: 3px 4px 31px -5px rgba(0,0,0,0.75);
+            box-shadow: 3px 4px 31px -5px rgba(0,0,0,0.75);
+        }
+        #player-header-logo{
+            max-width:400px;
+            border-radius: 20px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+        }
+        #player-header-logo img{
+            max-width:100%;
+            border-radius: 20px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+        }
+        #player-btn{
+            width:350px;
+            margin-left:50px;;
+        }
+        input#volume{
+            max-width:50px;
+        }
+        button{
+            background-color: none;
+            border: none;
+            outline: none;
+        }
+        button#play{
+            width:64px;
+            height:64px;
+            background-image: url("img/play.png");
+        }
+        button#pause{
+            width:64px;
+            height:64px;
+            background-image: url("img/pause.png");
+        }
+        button#prev{
+            width:64px;
+            height:64px;
+            background-image: url("img/prev.png");
+        }
+        button#next{
+            width:64px;
+            height:64px;
+            background-image: url("img/next.png");
+        }
+        button#stop{
+            width:64px;
+            height:64px;
+            background-image: url("img/stop.png");
+        }
+        #playlist{
+            list-style: none;
+            width:91%;
+
+        }
+        #playlist li{
+            cursor: pointer;
+            margin:4px;
+            padding:1px;
+            border-radius: 7px;
+            -moz-border-radius: 7px;
+            -webkit-border-radius: 7px;
+        }
+        #playlist li.active{
+            background-color: aquamarine;
+            font-weight: bold;
+        }
+        #progressBar{
+            width: 80%;
+            margin-left:2%;
+            margin-bottom:20px;
+            margin-top:10px;
+            height:17px;
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            background-color: darkslategrey;
+            margin: 0 auto;
+        }
+        #progress{
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            height:10px;
+            display:inline-block;
+            background-color: #1a98cc;
+        }
+        #duration{
+            float:right;
+            top:0;
+            right:10px;
+            padding:4px 8px;
+            background-color: black;
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            color:whitesmoke;
+        }
+        #tracker{
+            position: relative;
+            width:100%;
+        }
+        #audio-info{
+            width:200px;
+            margin: auto;
+        }
+
+       /* Range stylization*/
+
+        input[type=range] {
+            -webkit-appearance: none
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            margin-left:25px;
+            border-radius: 8px;
+            -moz-border-radius: 8px;
+            -webkit-border-radius: 8px;
+            height: 7px;
+            border: 1px solid #bdc3c7;
+            background-color: #fff;
+        }
+
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            background-color: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            cursor: pointer;
+        }
+    /*    .addSong input{
+            width:180px;
+            border-radius: 5px;
+            border:none;
+            border-bottom: 1px solid grey;
+        }*/
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Audioplayer</h1>
+        <p>html5 audio api</p>
+    </div>
+
+    <div id="player-wrapper">
+            <div id="player-header-logo">
+                <figure><img src="img/1.jpg" alt="Music"></figure>
+            </div>
+        <div id="audio-player">
+                <div id="audio-info">
+                    <br>
+            <strong><span class="artist"></span> - <span class="title"></span></strong>
+                </div>
+        </div>
+            <div id="player-btn">
+                <button id="prev"></button>
+                <button id="play"></button>
+                <button id="pause"></button>
+                <button id="stop"></button>
+                <button id="next"></button>
+            </div>
+       <!-- Add song <div class="addSong" style="width:300px;margin: auto;">
+            <input type="text"  placeholder="Add new song" id="addSongName">
+            <span class="glyphicon glyphicon-info-sign" title="This song must be in directive with your player in folder 'media'" style="cursor: pointer;"></span>
+            <button type="button" style="width:60px;" class="btn btn-success" id="addSong">Add</button>
+            <input type="text" id="addSongTitle" placeholder="Title">
+            <input type="text" id="addSongArtist" placeholder="Artist">
+        </div>-->
+    <br>
+        <input type="range" id="volume" min="0" max="10" value="10">
+        <br>
+
+        <div id="tracker">
+            <div id="progressBar">
+                <span id="progress"></span>
+            </div>
+            <span id="duration"></span>
+        </div>
+        <br>
+    <ul id="playlist">
+    </ul>
+        <br>
+    </div>
+    <br>
+</div>
+</body>
+</html>
